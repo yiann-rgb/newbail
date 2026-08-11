@@ -31,6 +31,8 @@ export type SocketConfig = {
     keepAliveIntervalMs: number;
     /** should baileys use the mobile api instead of the multi device api */
     mobile?: boolean;
+    /** WhatsApp Business account */
+    business?: boolean;
     /** proxy agent */
     agent?: Agent;
     /** pino logger */

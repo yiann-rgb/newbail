@@ -201,17 +201,41 @@ export interface RegistrationOptions {
     /**
      * How to send the one time code
      */
-    method?: 'sms' | 'voice' | 'captcha';
+    method?: 'sms' | 'voice' | 'flash' | 'wa_old' | 'captcha' | 'email';
     /**
      * The captcha code if it was requested
      */
     captcha?: string;
+    /**
+     * Custom language (ISO 639-1), overrides auto-detected from country code
+     */
+    lg?: string;
+    /**
+     * Custom locale language (same as lg)
+     */
+    locale_lang?: string;
+    /**
+     * Custom locale country (ISO 3166-1 alpha-2), overrides auto-detected
+     */
+    lc?: string;
+    /**
+     * Custom locale country (same as lc)
+     */
+    locale_country?: string;
+    /**
+     * Mistyped counter, defaults to 7
+     */
+    mistyped?: string;
+    /**
+     * Enable WhatsApp Business registration
+     */
+    business?: boolean;
 }
 export type RegistrationParams = RegistrationData & RegistrationOptions;
 export declare function registrationParams(params: RegistrationParams): {
     cc: string;
     in: string;
-    Rc: string;
+    rc: string;
     lg: string;
     lc: string;
     mistyped: string;
@@ -250,12 +274,14 @@ export declare function mobileRegister(params: RegistrationParams & {
 export declare function mobileRegisterEncrypt(data: string): string;
 export declare function mobileRegisterFetch(path: string, opts?: AxiosRequestConfig): Promise<ExistsResponse>;
 export interface ExistsResponse {
-    status: 'fail' | 'sent';
+    status: 'fail' | 'sent' | 'ok';
     voice_length?: number;
     voice_wait?: number;
     sms_length?: number;
     sms_wait?: number;
-    reason?: 'incorrect' | 'missing_param' | 'code_checkpoint';
+    wa_old_wait?: number;
+    flash_wait?: number;
+    reason?: 'incorrect' | 'missing_param' | 'code_checkpoint' | 'too_recent' | 'too_many' | 'no_routes';
     login?: string;
     flash_type?: number;
     ab_hash?: string;
@@ -264,4 +290,6 @@ export interface ExistsResponse {
     lid?: string;
     image_blob?: string;
     audio_blob?: string;
+    retry_after?: number;
+    custom_block_screen?: any;
 }
