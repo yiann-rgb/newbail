@@ -9,6 +9,7 @@ import { AuthenticationState, SignalAuthState, TransactionCapabilityOptions } fr
 import { MediaConnInfo } from './Message';
 import { SignalRepository } from './Signal';
 export type WAVersion = [number, number, number];
+export type WAVersionMobile = [number, number, number, number];
 export type WABrowserDescription = [string, string, string];
 export type CacheStore = {
     /** get a cached key and change the stats */
@@ -19,6 +20,17 @@ export type CacheStore = {
     del(key: string): void;
     /** flush all data */
     flushAll(): void;
+};
+export type DeviceConfig = {
+    os: 'ios' | 'android';
+    platform: number;
+    model: string;
+    manufacturer: string;
+    osVersion: string;
+    osBuildNumber: string;
+    modelId: string;
+    deviceModelType: number;
+    business?: boolean;
 };
 export type SocketConfig = {
     /** the WS url to connect to WA */
@@ -110,4 +122,8 @@ export type SocketConfig = {
     makeSignalRepository: (auth: SignalAuthState) => SignalRepository;
     /** Socket passthrough */
     socket?: any;
+    /** Mobile device MCC (default: '510') */
+    mcc?: string;
+    /** Mobile device MNC (default: '01') */
+    mnc?: string;
 };
