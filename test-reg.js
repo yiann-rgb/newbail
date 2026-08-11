@@ -14,7 +14,7 @@ if (!phoneNumber) {
   process.exit(1);
 }
 
-const { useMultiFileAuthState, fetchLatestBaileysVersion, Browsers } = require("./lib/Utils");
+const { useMultiFileAuthState, fetchLatestBaileysVersion, Browsers } = require("baileys");
 const { makeWASocket } = require("./lib/Socket");
 const pino = require("pino");
 
